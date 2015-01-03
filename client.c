@@ -23,23 +23,26 @@ int main(int argc, char *argv[])
 	}
 	str = argv[1];
 
-	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	//sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	sockfd = Socket(AF_INET, SOCK_STREAM, 0);
 	
 	bzero(&servaddr, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr);
 	servaddr.sin_port = htons(SERV_PORT);
 	
-	connect(sockfd, (struct sockaddr *) &servaddr, sizeof(servaddr));
-	
-	write(sockfd, str, strlen(str));
+	//connect(sockfd, (struct sockaddr *) &servaddr, sizeof(servaddr));	
+	Connect(sockfd, (struct sockaddr *) &servaddr, sizeof(servaddr));	
 
-	n = read(sockfd, buf, MAXLINE);
+	Write(sockfd, str, strlen(str));
+
+	n = Read(sockfd, buf, MAXLINE);
 	printf("Response from server:\n");
 	//write(STDOUT_FILENO, buf, n);
 	buf[n] = '\0';
 	printf("%s\n", buf);
 	
-	close(sockfd);
+	//close(sockfd);
+	Close(sockfd);
 	return 0;
 }

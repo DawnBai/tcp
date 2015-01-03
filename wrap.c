@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include<errno.h>
 #include<sys/socket.h>
+#include"wrap.h"
 
 void perr_exit(const char *s)
 {
@@ -23,6 +24,12 @@ again:
 }
 
 void Bind(int fd, const struct sockaddr *sa, socklen_t salen)
+{
+	if (bind(fd, sa, salen) < 0)
+		perr_exit("bind error");
+}
+
+void Connect(int fd, const struct sockaddr *sa, socklen_t salen)
 {
 	if (connect(fd, sa, salen) < 0)
 		perr_exit("connect error");
